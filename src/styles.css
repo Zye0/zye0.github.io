@@ -1,3 +1,18 @@
+body {
+    margin: 0;
+}
+
 h1 {
     font-family: Arial;
+}
+
+nav {
+    width: 100%;
+    background-color: black;
+    padding: 10px;
+}
+
+nav a {
+    color: white;
+    padding: 50px;
 }
