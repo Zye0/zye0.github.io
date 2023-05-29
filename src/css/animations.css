@@ -13,18 +13,29 @@
      }
 }
 
+/* navbar */
+.nav-shown {
+  background-color: rgba(256, 256, 256, 0.9);
+  color: #000 !important;
+  backdrop-filter: blur(10px);
+  transition: background-color 0.5s ease;
+}
 
-a {
+
+
+/* header */
+
+#hero-container #content a {
     position: relative;
     color: #ffffff;
-    text-decoration: none;
-  }
+}
+
   
-  a:hover {
+#hero-container #content a:hover {
     color: #ffffff;
-  }
+}
   
-  a::before {
+#hero-container #content a::before {
     content: "";
     position: absolute;
     display: block;
@@ -38,11 +49,98 @@ a {
     transition: transform 0.3s ease;
   }
   
-  a:hover::before {
+#hero-container #content a:hover::before {
     transform: scaleX(1);
 }
 
 #hero-container #content button:hover {
     background-color: rgba(265, 265, 265, 0.2);
     cursor: pointer;
+}
+
+
+@keyframes traverse-horizontal {
+    0% {
+        left: calc(0% - 2rem);
+        visibility: visible;
+    }
+
+    50% {
+        left: calc(100% + 2rem);
+    }
+    100% {
+        left: calc(100% + 2rem);
+    }
+}
+@keyframes traverse-vertical {
+    0% {
+        top: calc(0% - 2rem);
+        visibility: visible;
+    }
+    50% {
+        top: calc(100% + 2rem);
+    }
+    100% {
+        top: calc(100% + 2rem);
+    }
+}
+@keyframes traverse-curve-top-left {
+    0% {
+        top: calc(0% - 2rem);
+        visibility: visible;
+    }
+    25% {
+        top: 100%;
+        right: 0px;
+        
+    }
+    50%, 100% {
+        top: 100%;
+        right: calc(110% + 2rem);
+    }
+
+}
+@keyframes traverse-curve-bottom-left {
+    0% {
+        top: calc(100% + 2rem);
+        visibility: visible;
+    }
+    25% {
+        top: 0%;
+        right: 0px;
+        
+    }
+    50%, 100% {
+        top: 0%;
+        right: calc(110% + 2rem);
+    }
+}
+@keyframes traverse-curve-top-right {
+    0% {
+        top: calc(0% - 2rem);
+        visibility: visible;
+    }
+    25% {
+        top: 100%;
+        left: 0px;
+        
+    }
+    50%, 100% {
+        top: 100%;
+        left: calc(110% + 2rem);
+    }
+}
+@keyframes traverse-curve-bottom-right {
+    0% {
+        top: calc(100% + 2rem);
+        visibility: visible;
+    }
+    25% {
+        top: 0%;
+        left: 0px;
+    }
+    50%, 100% {
+        top: 0%;
+        left: calc(110% + 2rem);
+    }
 }

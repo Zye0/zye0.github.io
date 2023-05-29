@@ -1,6 +1,5 @@
 * {
     box-sizing: border-box;
-    font-family:Georgia, 'Times New Roman', Times, serif;
     scroll-behavior: smooth;
 }
 
@@ -362,25 +361,5 @@ CUSTOM RESETS
   */
 
   a {
-    color: #ffffff;
     text-decoration: none;
-  }
-
-  a:link {
-    color: #ffffff;
-  }
-  
-  /* visited link */
-  a:visited {
-    color: #ffffff;
-  }
-  
-  /* mouse over link */
-  a:hover {
-    color: #ffffff;
-  }
-  
-  /* selected link */
-  a:active {
-    color: #ffffff;
   }
