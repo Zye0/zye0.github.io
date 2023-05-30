@@ -735,6 +735,9 @@ const containerY = document.getElementById('background-items').clientHeight;
 const container = document.getElementById('background-items'); // background  container
 let rootSize = parseFloat(getComputedStyle(document.documentElement).fontSize); // gets the root font size
 
+const cableWidthPercentX = (rootSize/containerX) * 100; // width of the cable, as a percent.
+const cableWidthPercentY = (rootSize/containerY) * 100; // height of the cable, as a percent.
+
 const xPositions = [];
 const yPositions = [];
 
@@ -776,62 +779,81 @@ function ranAnimation(animationName) {
 }
 
 // gets random, unique x-value
-function ranXPos(xPositions, range, inverse) {
+function ranXPos(xPositions, range, inverse, amount) {
     let x = ranNum(100); // generates random x-value
     if (x < 5) x += 5; // +5 if too close to left
     if (x > 95) x -= 5; // -5 if too close to right
 
     if (inverse) x = 100 - x; // if right side, reverse x-value
 
+    console.log(`Init value: ${x}`);
+
     let negX = x; // 
 
     // gets unique x-value 
     while(true) { 
         // checks if x-value already exists
-        if (!withinRange(xPositions, x, range)) {
+        if (!withinRange(xPositions, x, range) && !withinRange(xPositions, (x + amount), range)) {
+            console.log(`x: ${x} is not in ${xPositions}`)
             break;
-        } else if (!withinRange(xPositions, negX, range)) {
+        } else if (!withinRange(xPositions, negX, range) && !withinRange(xPositions, (negX + amount), range)) {
+            console.log(`negX: ${negX} is not in ${xPositions}`)
             x = negX;
             break;
         }
         // if both x-values already exist, increment and decrement
+        console.log(`x: ${x}, negX: ${negX} are both in ${xPositions}`);
         x++;
         negX--;
     }
 
+    xPositions.push(x);
+    xPositions.push(x + amount);
+
+    console.log(xPositions);
+
     if (inverse) x = 100 - x; // un-reverse x-value
 
-    xPositions.push(x);
     return x;
 }
 
 // gets random, unique y-value
-function ranYPos(yPositions, range, inverse) {
+function ranYPos(yPositions, range, inverse, amount) {
     let y = ranNum(100); // generates random y-value
     if (y < 5) y += 5; // +5 if too close to top
     if (y > 95) y -= 5; // -5 if too close to bottom
 
     if (inverse) y = 100 - y; // if bottom side, reverse y-value
 
+    console.log(`Init value: ${y}`);
+
+
     let negY = y; // 
 
     // gets unique y-value 
     while(true) { 
         // checks if y-value already exists
-        if (!withinRange(yPositions, y, range)) {
+        if (!withinRange(yPositions, y, range) && !withinRange(yPositions, (y + amount), range)) {
+            console.log(`y: ${y} is not in ${yPositions}`)
             break;
-        } else if (!withinRange(yPositions, negY, range)) {
+        } else if (!withinRange(yPositions, negY, range) && !withinRange(yPositions, (y + amount), range)) {
+            console.log(`negY: ${negY} is not in ${yPositions}`)
             y = negY;
             break;
         }
         // if both y-values already exist, increment and decrement
+        console.log(`y: ${y}, negY: ${negY} are both in ${yPositions}`)
         y++;
         negY--;
     }
 
-    if (inverse) y = 100 - y; // un-reverse y-value
 
     yPositions.push(y);
+    yPositions.push(y + amount);
+    console.log(yPositions);
+
+    if (inverse) y = 100 - y; // un-reverse y-value
+
     return y;
 }
 
@@ -849,47 +871,47 @@ for (let i = 0; i < 8; i++) {
 
     switch(num) {
         case 0: // left, curve up
-            console.log('left, curve up');
+            console.log('left, curve up' + i);
             
             div.classList.add('cable-curve-top-left');
 
-            div.style.width = `${ranXPos(xPositions, 3, false)}%`;
-            div.style.height = `${ranYPos(yPositions, 3, false)}%`;
+            div.style.width = `${ranXPos(xPositions, 3, false, -cableWidthPercentX)}%`;
+            div.style.height = `${ranYPos(yPositions, 3, false, -cableWidthPercentY)}%`;
 
             innerDiv.style.animation = `${ranAnimation('traverse-curve-top-left')}`;
             break;
         case 1: // left, curve down
-            console.log('left, curve down');
+            console.log('left, curve down' + i);
 
             div.classList.add('cable-curve-bottom-left');
 
-            div.style.width = `${ranXPos(xPositions, 3, false)}%`;
-            div.style.height = `${ranYPos(yPositions, 3, true)}%`;
+            div.style.width = `${ranXPos(xPositions, 3, false, -cableWidthPercentX)}%`;
+            div.style.height = `${ranYPos(yPositions, 3, true, cableWidthPercentY)}%`;
 
             innerDiv.style.animation = `${ranAnimation('traverse-curve-bottom-left')}`;
             break;
         case 2: // right, curve up
-            console.log('right, curve up');
+            console.log('right, curve up' + i);
 
             div.classList.add('cable-curve-top-right');
 
-            div.style.width = `${ranXPos(xPositions, 3, true)}%`;
-            div.style.height = `${ranYPos(yPositions, 3, false)}%`;
+            div.style.width = `${ranXPos(xPositions, 3, true, cableWidthPercentX)}%`;
+            div.style.height = `${ranYPos(yPositions, 3, false, -cableWidthPercentY)}%`;
 
             innerDiv.style.animation = `${ranAnimation('traverse-curve-top-right')}`;
             break;
         case 3: // right, curve down
-            console.log('right, curve down');
+            console.log('right, curve down' + i);
 
             div.classList.add('cable-curve-bottom-right');
 
-            div.style.width = `${ranXPos(xPositions, 3, true)}%`;
-            div.style.height = `${ranYPos(yPositions, 3, true)}%`;
+            div.style.width = `${ranXPos(xPositions, 3, true, cableWidthPercentX)}%`;
+            div.style.height = `${ranYPos(yPositions, 3, true, cableWidthPercentY)}%`;
 
             innerDiv.style.animation = `${ranAnimation('traverse-curve-bottom-right')}`;
             break;
         case 4: // horizontal
-            console.log('horizontal');
+            console.log('horizontal' + i);
 
             div.classList.add('cable-across');
             div.classList.add('cable-horizontal');
@@ -897,12 +919,12 @@ for (let i = 0; i < 8; i++) {
             div.style.width = '100%';
             div.style.height = '1.5rem';
 
-            div.style.top = `${ranYPos(yPositions, 3, false)}%`;
+            div.style.top = `${ranYPos(yPositions, 3, false, cableWidthPercentY)}%`;
 
             innerDiv.style.animation = `${ranAnimation('traverse-horizontal')}`;
             break;
         case 5: // vertical
-            console.log('vertical');
+            console.log('vertical' + i);
 
             div.classList.add('cable-across');
             div.classList.add('cable-vertical');
@@ -910,7 +932,7 @@ for (let i = 0; i < 8; i++) {
             div.style.height = '100%';
             div.style.width = '1.5rem';
 
-            div.style.left = `${ranXPos(xPositions, 3, false)}%`;
+            div.style.left = `${ranXPos(xPositions, 3, false, cableWidthPercentX)}%`;
 
             innerDiv.style.animation = `${ranAnimation('traverse-vertical')}`;
             break;
@@ -1045,4 +1067,4 @@ __webpack_require__.r(__webpack_exports__);
 
 /******/ })()
 ;
-//# sourceMappingURL=bundle23bbd9b2797e429f22a7.js.map
+//# sourceMappingURL=bundlea47742fc01273d319725.js.map
