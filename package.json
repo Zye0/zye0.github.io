@@ -2,16 +2,22 @@
   "name": "website",
   "version": "1.0.0",
   "description": "Website for our non-profit.",
+  "repository": {
+    "url": "git+https://github.com/Zye0/zye0.github.io.git"
+  },
   "private": true,
   "scripts": {
     "build": "webpack",
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^6.7.4",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.1",
     "style-loader": "^3.3.3",
     "webpack": "^5.83.1",
