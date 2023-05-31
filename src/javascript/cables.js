@@ -3,6 +3,8 @@ const containerX = document.getElementById('background-items').clientWidth;
 const containerY = document.getElementById('background-items').clientHeight;
 const container = document.getElementById('background-items'); // background  container
 let rootSize = parseFloat(getComputedStyle(document.documentElement).fontSize); // gets the root font size
+console.log(rootSize);
+// calculate the cable width and height as a percent of the container
 
 const cableWidthPercentX = (rootSize/containerX) * 100; // width of the cable, as a percent.
 const cableWidthPercentY = (rootSize/containerY) * 100; // height of the cable, as a percent.
@@ -63,9 +65,11 @@ function ranXPos(xPositions, range, inverse, amount) {
     while(true) { 
         // checks if x-value already exists
         if (!withinRange(xPositions, x, range) && !withinRange(xPositions, (x + amount), range)) {
+            if (x > 100) x = negX; // fixes bug where if too high or low, may be in same spot
             console.log(`x: ${x} is not in ${xPositions}`)
             break;
         } else if (!withinRange(xPositions, negX, range) && !withinRange(xPositions, (negX + amount), range)) {
+            if (x < 0) negX = x;
             console.log(`negX: ${negX} is not in ${xPositions}`)
             x = negX;
             break;
@@ -103,9 +107,11 @@ function ranYPos(yPositions, range, inverse, amount) {
     while(true) { 
         // checks if y-value already exists
         if (!withinRange(yPositions, y, range) && !withinRange(yPositions, (y + amount), range)) {
+            if (y > 100) y = negY; // fixes bug where if too high or low, may be in same spot
             console.log(`y: ${y} is not in ${yPositions}`)
             break;
-        } else if (!withinRange(yPositions, negY, range) && !withinRange(yPositions, (y + amount), range)) {
+        } else if (!withinRange(yPositions, negY, range) && !withinRange(yPositions, (negY + amount), range)) {
+            if (y < 0) negY = y;
             console.log(`negY: ${negY} is not in ${yPositions}`)
             y = negY;
             break;
@@ -128,7 +134,7 @@ function ranYPos(yPositions, range, inverse, amount) {
 
 
 
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 10; i++) {
     let num = ranNum(6);
 
     let div = document.createElement('div');
